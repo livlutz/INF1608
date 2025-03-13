@@ -3,4 +3,6 @@
 raiz quadrada
     sqrt(x)
     #include <math.h>
+
+compilar com gcc -Wall -o -lm
 */
