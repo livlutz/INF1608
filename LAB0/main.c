@@ -14,7 +14,11 @@ int main (void)
   double w[] = {1.0,2.0f};
 
   /* Imprime vetores (são iguais em conteúdo) */
+
+  printf("Vetor v :\n");
   vet_imprime(2,v);
+
+  printf("Vetor w :\n");
   vet_imprime(2,w);
 
   /*testando o produto escalar entre os vetores*/
@@ -26,7 +30,7 @@ int main (void)
   }
 
   else{
-    printf("Produto escalar correto\n");
+    printf("Produto escalar correto = %f\n",produto_escalar);
   }
 
   /*Testando a norma 2 do vetor v*/
@@ -37,7 +41,7 @@ int main (void)
   }
 
   else{
-    printf("Norma 2 certa\n");
+    printf("Norma 2 certa = %f\n",norma2);
   }
 
   /*testando se os vetores sao iguais*/
@@ -67,7 +71,11 @@ int main (void)
   double* B[] = {linha1,linha2,linha3};
 
   /* Imprime matrizes (são iguais em conteúdo) */
+
+  printf("Matriz A :\n");
   mat_imprime(3,2,A);
+
+  printf("Matriz B :\n");
   mat_imprime(3,2,B);
 
   double** T = mat_cria(2,3);
@@ -77,22 +85,30 @@ int main (void)
 
   mat_transposta(3,2,A,T);
 
+  printf("Matriz T :\n");
+
   mat_imprime(2,3,T);
 
   /*testando mat_multv*/
 
-  mat_multv(3,2,A,v,w);
+  double* W = vet_cria(3);
+  mat_multv(3,2,A,v,W);
 
-  vet_imprime(2,w);
+  printf("Vetor W :\n");
+
+  vet_imprime(3,W);
 
   /*testando mat_multm*/
 
   mat_multm(3,2,2,A,B,C);
 
+  printf("Matriz C :\n");
+
   mat_imprime(3,2,C);
 
   /* Apenas objetos dinâmicos podem ser liberados */
   vet_libera(v);
+  vet_libera(W);
   mat_libera(3,A);
   mat_libera(2,T);
   mat_libera(3,C);
