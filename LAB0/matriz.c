@@ -51,7 +51,7 @@ void mat_multm (int m, int n, int q, double** A, double** B, double** C){
   
   for(int i = 0; i < m; i++){
     for(int k = 0; k < q; k++){ 
-      C[i][k] = 0.0;// Trocar a ordem de 'j' e 'k'
+      C[i][k] = 0.0;
       for(int j = 0; j < n; j++){
         C[i][k] += A[i][j] * B[j][k];
       }
