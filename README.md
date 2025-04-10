@@ -1,3 +1,3 @@
 # INF1608
 
-Repository to store thursdays lab sessions codes
+Labs de análise numérica I 2025.1
