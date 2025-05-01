@@ -3,20 +3,35 @@
 #include <stdio.h>
 #include <math.h>
 
-#define PI 3.141592653589793
-
 double derivada (double (*f) (double x), double x, double h){
 
     return (f(x+h) - f(x-h))/(2*h);
 }
 
-double simpson (double (*f) (double), double a, double b, int n){
+double simpson(double (*f)(double), double a, double b, int n) {
 
-    double h = (b-a)/n;
+    //h = b-a = x1 - x0 
 
-    double i = (h/6.0) * (f(a) + 4.0*f(a+(h/2.0)) + f(a+h));
+    //tamanho do passo de cada sub intervalo
+    double h = (b - a) / n;
+    double soma = 0.0;
 
-    return i;
+    //integrando em cada passo n
+    for (int i = 0; i < n; i++) {
+        
+        //inicio do intervalo
+        double x0 = a + i * h;
+        
+        //final do intervalo
+        double x1 = x0 + h;
+
+        //meio do intervalo
+        double xm = (x0 + x1) / 2.0;
+
+        soma += (h / 6.0) * (f(x0) + 4.0 * f(xm) + f(x1));
+    }
+
+    return soma;
 }
 
 double simpsonadaptativo (double (*f) (double), double a, double b, double tol){
@@ -31,7 +46,7 @@ double simpsonadaptativo (double (*f) (double), double a, double b, double tol){
 
         if(diferenca < (15.0 * tol)){
             tolerante = 1;
-            r = simpson(f,a,c,1) + simpson(f,c,b,1) - tol/15;
+            r = simpson(f,a,c,1) + simpson(f,c,b,1) - diferenca/15;
         }
 
         else{
