@@ -9,7 +9,7 @@ void teste_derivada (double (*f) (double), double (*fl) (double), double x)
 {
   for (int i=1; i < 13; ++i) {
     double h = pow(10,-i);
-    double d = derivada(f,x,h); // COMPLETAR: calcular derivada
+    double d = derivada(f,x,h); // COMPLETAR: calcular derivada -ok
     double a = fl(x);
     printf("%e  %.16g  %.16g\n",h,d,fabs(d-a));
   }
@@ -17,8 +17,8 @@ void teste_derivada (double (*f) (double), double (*fl) (double), double x)
 
 void teste_simpson (double (*f) (double), double a, double b)
 {
-  double s16 = simpson(f,a,b,16); // COMPLETAR: chamar simpson com 16 passos
-  double s32 = simpson(f,a,b,32); // COMPLETAR: chamar simpson com 32 passos
+  double s16 = simpson(f,a,b,16); // COMPLETAR: chamar simpson com 16 passos -ok
+  double s32 = simpson(f,a,b,32); // COMPLETAR: chamar simpson com 32 passos - ok
   printf("%.16g  %.16g\n",s16,s32);
 }
 
@@ -26,7 +26,7 @@ void teste_adaptativo (double (*f) (double), double a, double b, double d)
 {
   for (int i = 1; i < 13; ++i) {
     double tol = pow(10,-i);
-    double s = simpsonadaptativo(f,a,b,tol); // COMPLETAR: chamar simpson adaptativo em [a,b]
+    double s = simpsonadaptativo(f,a,b,tol); // COMPLETAR: chamar simpson adaptativo em [a,b] - ok
     printf("%e %.16g %e\n", tol, s, fabs(d-s));
   }  
 }

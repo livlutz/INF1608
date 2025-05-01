@@ -5,30 +5,32 @@
 
 double derivada (double (*f) (double x), double x, double h){
 
-    return (f(x+h) - f(x-h))/(2*h);
+    return (f(x + h) - f(x - h))/(2 * h);
 }
 
 double simpson(double (*f)(double), double a, double b, int n) {
 
-    //h = b-a = x1 - x0 
-
     //tamanho do passo de cada sub intervalo
     double h = (b - a) / n;
     double soma = 0.0;
+    double x0,x1,xm,fa,fc,fb;
 
     //integrando em cada passo n
     for (int i = 0; i < n; i++) {
         
         //inicio do intervalo
-        double x0 = a + i * h;
+        x0 = a + i * h;
+        fa = f(x0);
         
         //final do intervalo
-        double x1 = x0 + h;
+        x1 = x0 + h;
+        fb = f(x1);
 
         //meio do intervalo
-        double xm = (x0 + x1) / 2.0;
+        xm = (x0 + x1) / 2.0;
+        fc = f(xm);
 
-        soma += (h / 6.0) * (f(x0) + 4.0 * f(xm) + f(x1));
+        soma += (h / 6.0) * (fa + 4.0 * fc + fb);
     }
 
     return soma;
@@ -36,24 +38,23 @@ double simpson(double (*f)(double), double a, double b, int n) {
 
 double simpsonadaptativo (double (*f) (double), double a, double b, double tol){
 
-    int tolerante = 0;
-    double diferenca;
+    double c = (a + b) / 2.0;
 
-    double c = (a+b)/2.0,r;
+    /* ∆ = S[a,b] − S[a,c] − S[c,b] */
+    
+    double sab = simpson(f,a,b,1);
+    double sac = simpson(f,a,c,1);
+    double scb = simpson(f,c,b,1);
 
-    while (!tolerante){
-        diferenca = fabs(simpson(f,a,b,1) - simpson(f,a,c,1) - simpson (f,c,b,1));
+    double delta = sab-(sac+scb);
 
-        if(diferenca < (15.0 * tol)){
-            tolerante = 1;
-            r = simpson(f,a,c,1) + simpson(f,c,b,1) - diferenca/15;
-        }
-
-        else{
-            c /= 2.0;
-            tol /= 2.0;
-        }
+    /* se ∆ < 15*tol ent retorna  S[a,c] + S[c,b] - ∆/15 */
+    if(fabs(delta) < (15.0 * tol)){
+        return sac + scb - (delta/15.0);
     }
 
-    return r;
+    /*intervalo e tolerancia sao divididos pela metade e o metodo se repete*/
+    else {
+        return simpsonadaptativo(f,a,c,tol/2.0) + simpsonadaptativo(f,c,b,tol/2.0);
+    }
 }
